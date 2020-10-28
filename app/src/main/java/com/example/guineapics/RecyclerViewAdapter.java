@@ -4,19 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.guineapics.dao.GuineaPigsDAO;
+import com.example.guineapics.model.GuineaPig;
+
+import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<TileViewHolder> {
     private LayoutInflater inflater;
-    private GuineaPigsDAO pigsDAO = GuineaPigsDAO.getDAO();
+    private ArrayList<GuineaPig> guineaPigs = GuineaPigsDAO.getDAO().getArrayList();
 
-    //TODO: should I store the list or is DAO acceptable?
-    public RecyclerViewAdapter(Context context /*, ArrayList<GuineaPig> guineaPigs*/) {
+    public RecyclerViewAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -24,20 +25,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<TileViewHolder> {
     @Override
     public TileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.tile_blueprint, parent, false);
-        return new TileViewHolder(itemView, this);
+        return new TileViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TileViewHolder holder, int position) {
-        String currentTitle = pigsDAO.getByIndex(position).getName();
+        String currentTitle = guineaPigs.get(position).getName();
         holder.itemTextView.setText(currentTitle);
     }
 
     @Override
-    //TODO: should I store itemCount as a final int in class to prevent errors
-    // (for example if an item is added in the meantime)?
-
     public int getItemCount() {
-        return pigsDAO.getPigsCount();
+        return guineaPigs.size();
     }
 }

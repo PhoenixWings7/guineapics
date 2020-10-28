@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TileViewHolder extends RecyclerView.ViewHolder {
     public final TextView itemTextView;
-    final RecyclerViewAdapter adapter;
 
-    public TileViewHolder(@NonNull View itemView, RecyclerViewAdapter adapter) {
+    public TileViewHolder(@NonNull View itemView) {
         super(itemView);
         this.itemTextView = itemView.findViewById(R.id.tile_textview);
-        this.adapter = adapter;
     }
 }
